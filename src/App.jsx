@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Camera, ShoppingBag, Scissors, Heart, Menu, X, Star, Image as ImageIcon, Sparkles, BookHeart, 
+  Camera, ShoppingBag, Scissors, Heart, Menu, X, Star, Image as ImageIcon, Sparkles, Book, 
   Loader2, Globe, ArrowRight, RotateCcw, Info, Upload, Check, Plus
 } from 'lucide-react';
 
@@ -373,7 +373,7 @@ const HomePage = ({ setActivePage }) => {
             </button>
             <button onClick={() => setActivePage('about')} className="flex flex-col items-center gap-1.5 group">
               <div className="w-12 h-12 bg-white rounded-2xl shadow-sm border border-[#E5E0D8] flex items-center justify-center group-hover:border-[#E07A5F] transition-all">
-                <BookHeart className="w-5 h-5 text-[#6B8E73]" />
+                <Book className="w-5 h-5 text-[#6B8E73]" />
               </div>
               <span className="text-[10px] font-semibold text-[#5D5F65]">완성 작품</span>
             </button>
@@ -729,5 +729,6 @@ const App = () => {
     </div>
   );
 };
+
 
 export default App;
