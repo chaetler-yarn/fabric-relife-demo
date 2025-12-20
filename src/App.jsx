@@ -5,7 +5,7 @@ import {
 } from 'lucide-react';
 
 /**
- * Fabric Re:Life - Final Deployment Version
+ * JJAJJA - Final Deployment Version
  * * 모든 수정사항 반영 완료 (이미지 경로, 부자재, 갤러리 UI)
  */
 
@@ -102,7 +102,7 @@ const Navbar = ({ activePage, setActivePage }) => {
         <div className="flex justify-between items-center h-16 md:h-20">
           <div className="flex-shrink-0 flex items-center gap-2 cursor-pointer" onClick={() => setActivePage('home')}>
             <Scissors className="h-6 w-6 text-[#E07A5F]" />
-            <span className="text-lg md:text-xl font-bold tracking-tight text-[#2D3142]">Fabric Re:Life</span>
+            <span className="text-lg md:text-xl font-bold tracking-tight text-[#2D3142]">JJAJJA</span>
           </div>
           
           <div className="hidden md:flex space-x-8">
@@ -162,11 +162,11 @@ const Footer = () => (
         <div className="col-span-1 md:col-span-2">
           <div className="flex items-center gap-2 mb-4">
             <Scissors className="h-6 w-6 text-[#6B8E73]" />
-            <span className="text-xl font-bold text-[#F5F0E8]">Fabric Re:Life</span>
+            <span className="text-xl font-bold text-[#F5F0E8]">JJAJJA</span>
           </div>
           <p className="text-sm font-normal leading-relaxed max-w-sm text-[#D1D5DB]">
             옷장 속 잠든 옷에 새로운 생명을 불어넣습니다.<br/>
-            추억을 간직하는 가장 따뜻하고 지속 가능한 방법, Fabric Re:Life와 함께하세요.
+            추억을 간직하는 가장 따뜻하고 지속 가능한 방법, JJAJJA와 함께하세요.
           </p>
         </div>
         <div>
@@ -187,7 +187,7 @@ const Footer = () => (
         </div>
       </div>
       <div className="border-t border-[#3E4255] pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="text-xs font-normal text-[#9CA3AF]">© 2024 Fabric Re:Life. All rights reserved.</p>
+        <p className="text-xs font-normal text-[#9CA3AF]">© 2024 JJAJJA. All rights reserved.</p>
         <div className="flex gap-4">
           <Globe className="w-5 h-5 cursor-pointer hover:text-white" />
           <div className="w-5 h-5 bg-[#3E4255] rounded-full cursor-pointer hover:bg-[#4B5563]"></div>
@@ -732,3 +732,4 @@ const App = () => {
 
 
 export default App;
+
