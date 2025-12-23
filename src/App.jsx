@@ -5,10 +5,11 @@ import {
 } from 'lucide-react';
 
 /**
- * JJAJJA (짜짜) - Prototype Version 1.3
+ * JJAJJA (짜짜) - Prototype Version 1.4
  * 1. 갤러리 첫 화면: '메모리 드로잉 포스터' 기본 노출
  * 2. 갤러리 배지: '바느질 0%' 오렌지색 배지 삭제
  * 3. 푸터: 데모 버전 라이선스 면책 조항 추가
+ * 4. 마켓(키트 구매): 오인 방지를 위해 제품 사진 삭제 -> DIY 아이콘 대체
  */
 
 // --- 데이터 구조 ---
@@ -22,7 +23,6 @@ const STORIES = [
     title: "아버지의 양복, 거실의 품격이 되다",
     desc: "30년 간 가족을 위해 입으셨던 아버지의 회색 양복. 차가운 옷장 대신 따뜻한 거실에서 매일 아버지를 기억합니다.",
     originalImage: "/images/IMG_0590.jpg",
-    // [수정] 아이템 순서 변경: 포스터(3) -> 쿠션(1) -> 가방(2)
     items: [
       { id: '1-3', type: 'Poster', name: "메모리 드로잉 포스터", difficulty: 3, price: "14,900", img: "/images/IMG_0595.jpg", desc: "아버지의 뒷모습을 담은 패브릭 아트" },
       { id: '1-1', type: 'Cushion', name: "클래식 수트 쿠션", difficulty: 1, price: "18,900", img: "/images/IMG_0597.jpg", desc: "앞주머니 디테일을 살린 중후한 멋" },
@@ -171,7 +171,6 @@ const Footer = () => (
             <span className="text-xl font-bold text-[#F5F0E8]">JJAJJA</span>
           </div>
           
-          {/* [수정] 데모 버전 면책 조항 적용 */}
           <div className="max-w-md">
             <h5 className="text-[#E07A5F] font-bold text-sm mb-2 flex items-center gap-2">
               <Info className="w-4 h-4" />
@@ -213,7 +212,7 @@ const Footer = () => (
   </footer>
 );
 
-// --- StoryCard Component (Modified) ---
+// --- StoryCard Component ---
 
 const StoryCard = ({ story, setActivePage }) => {
   const [selectedIndex, setSelectedIndex] = useState(0); 
@@ -225,7 +224,6 @@ const StoryCard = ({ story, setActivePage }) => {
       <div className="w-full md:w-[50%] bg-[#F5F0E8] relative aspect-square md:aspect-auto">
          <img src={displayImage} alt="Display" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" onError={(e) => {e.target.src = 'https://via.placeholder.com/600x600?text=이미지 준비 중'}} />
          <div className="absolute top-6 left-6 flex flex-col gap-2">
-            {/* [수정] '바느질 0%' 배지 삭제됨 */}
             <div className={`backdrop-blur-md px-4 py-2 rounded-full text-[10px] font-black tracking-widest ${selectedIndex === -1 ? 'bg-black/80 text-white' : 'bg-white/90 text-slate-800'}`}>
                 {selectedIndex === -1 ? 'BEFORE' : 'AFTER'}
             </div>
@@ -552,6 +550,8 @@ const StudioPage = () => {
   );
 };
 
+// --- MarketPage (Modified: Image Removed) ---
+
 const MarketPage = () => {
   // Update Market Items to match Story Items + Basic Tools
   const MARKET_ITEMS = [
@@ -582,8 +582,11 @@ const MarketPage = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {MARKET_ITEMS.map((item) => (
                   <div key={item.id} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-[#E5E0D8]">
-                      <div className="relative aspect-square bg-[#F5F0E8] overflow-hidden">
-                          <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onError={(e) => e.target.src='https://via.placeholder.com/400x400?text=Item'} />
+                      {/* [수정] 제품 사진 삭제 -> DIY 일러스트/아이콘 대체 */}
+                      <div className="relative aspect-square bg-[#F5F0E8] flex flex-col items-center justify-center p-6 text-[#A8A29E]">
+                          <Scissors className="w-12 h-12 mb-3 opacity-50" />
+                          <span className="text-xs font-black tracking-widest border-2 border-[#A8A29E]/30 px-3 py-1 rounded-full opacity-50">DIY KIT</span>
+                          
                           <div className="absolute top-3 left-3 bg-white/90 backdrop-blur px-2 py-1 rounded text-xs font-bold text-[#2D3142]">
                               {item.tag}
                           </div>
@@ -614,76 +617,3 @@ const AboutPage = () => (
             당신도 이렇게 만들 수 있습니다.<br/>
             완성한 작품을 공유하고, 영감을 나눠주세요.
         </p>
-        <button className="bg-[#2D3142] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#1A1D2D] transition shadow-lg flex items-center justify-center gap-2 mx-auto">
-            <Camera className="w-5 h-5" />
-            내 작품 올리기
-        </button>
-    </div>
-
-    {/* User Gallery Grid */}
-    <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
-        {[
-            "/images/IMG_0597.jpg", "/images/IMG_0596.jpg", "/images/IMG_0595.jpg",
-            "/images/IMG_0584.jpg", "/images/IMG_0583.jpg", "/images/IMG_0581.jpg",
-            "/images/IMG_0586.jpg", "/images/IMG_0588.jpg", "/images/IMG_0589.jpg",
-            "/images/IMG_0577.jpg", "/images/IMG_0576.jpg", "/images/IMG_0585.jpg",
-            "/images/IMG_0580.jpg", "/images/IMG_0579.jpg", "/images/IMG_0578.jpg"
-        ].map((img, idx) => (
-            <div key={idx} className="aspect-square rounded-2xl overflow-hidden bg-white shadow-sm border border-[#E5E0D8] group relative">
-                <img src={img} alt="Finished Work" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onError={(e) => e.target.src='https://via.placeholder.com/400x400?text=Work'} />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
-                <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div className="bg-white/90 backdrop-blur p-2 rounded-full shadow-sm">
-                        <Heart className="w-4 h-4 text-[#E07A5F]" />
-                    </div>
-                </div>
-            </div>
-        ))}
-        {/* 'More' Placeholder */}
-        <div className="aspect-square rounded-2xl bg-[#F5F0E8] border border-[#E5E0D8] border-dashed flex flex-col items-center justify-center text-[#9CA3AF] hover:bg-[#E5E0D8] transition cursor-pointer">
-            <Plus className="w-8 h-8 mb-2" />
-            <span className="text-sm font-medium">더 보기</span>
-        </div>
-    </div>
-  </div>
-);
-
-// --- Main App Component ---
-
-const App = () => {
-  const [activePage, setActivePage] = useState('home');
-
-  // 폰트 로딩 깜빡임 방지 (useEffect Injection)
-  useEffect(() => {
-    const link = document.createElement('link');
-    link.href = "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css";
-    link.rel = "stylesheet";
-    document.head.appendChild(link);
-    
-    return () => {
-      document.head.removeChild(link);
-    };
-  }, []);
-
-  const renderPage = () => {
-    switch (activePage) {
-      case 'gallery': return <GalleryPage setActivePage={setActivePage} />; 
-      case 'studio': return <StudioPage />;
-      case 'market': return <MarketPage />;
-      case 'about': return <AboutPage />;
-      default: return <HomePage setActivePage={setActivePage} />;
-    }
-  };
-
-  return (
-    <div className="font-sans text-[#2D3142] min-h-screen bg-[#FFF9F0] selection:bg-[#E07A5F]/20 selection:text-[#E07A5F]" style={{ fontFamily: '"Pretendard", sans-serif' }}>
-      <Navbar activePage={activePage} setActivePage={setActivePage} />
-      <main className="min-h-screen">
-        {renderPage()}
-      </main>
-      <Footer />
-    </div>
-  );
-};
-
-export default App;
