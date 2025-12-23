@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Camera, ShoppingBag, Scissors, Heart, Menu, X, Star, Image as ImageIcon, Sparkles, Book, 
-  Loader2, Globe, ArrowRight, RotateCcw, Info, Upload, Check, Plus
+  Loader2, Globe, ArrowRight, RotateCcw, Info, Upload, Check, Plus, Zap
 } from 'lucide-react';
 
 /**
- * JJAJJA - Final Deployment Version
- * * 모든 수정사항 반영 완료 (이미지 경로, 부자재, 갤러리 UI)
+ * JJAJJA (짜짜) - Mobile Icons Restored Version
+ * 1. 홈 화면 모바일 퀵 메뉴(4개 아이콘) 복구 완료
+ * 2. 기존 컨텐츠 및 디자인 유지
  */
 
-// --- Data Structure ---
+// --- 데이터 구조 ---
 
-const CATEGORIES = ['전체', '겉옷', '아기옷', '상의', '하의', '원피스'];
+const CATEGORIES = ['전체', '똥손전용⚡', '상의', '하의', '원피스', '겉옷', '아기옷'];
 
 const STORIES = [
   {
@@ -27,51 +28,54 @@ const STORIES = [
     ]
   },
   {
-    id: 2,
-    type: '원피스',
-    title: "설렘 가득했던 그날의 임부복",
-    desc: "아이를 기다리며 입었던 소중한 원피스. 독특한 컬러 블록과 패턴을 살려 아이 방의 힙한 인테리어 포인트가 되었습니다.",
-    originalImage: "/images/IMG_0582.jpg",
+    id: 5,
+    type: '상의',
+    isNoSew: true,
+    title: "하와이안 셔츠의 화려한 외출",
+    desc: "휴양지의 설렘이 담긴 하와이안 셔츠. 등판의 화려한 패턴을 살려 주방에 생기를 더하는 앞치마와 소품으로 변신합니다.",
+    originalImage: "/images/IMG_0572.jpg", 
     items: [
-      { id: '2-1', type: 'Cushion', name: "컬러블록 포인트 쿠션", difficulty: 1, price: "18,900", img: "/images/IMG_0584.jpg", desc: "원피스의 배색을 활용한 모던 디자인" },
-      { id: '2-2', type: 'Bag', name: "러플 포켓 에코백", difficulty: 2, price: "22,900", img: "/images/IMG_0583.jpg", desc: "치마 주름을 살린 러블리한 가방" },
-      { id: '2-3', type: 'Poster', name: "업사이클링 콜라주 포스터", difficulty: 3, price: "15,900", img: "/images/IMG_0581.jpg", desc: "자투리 천을 이어 붙인 하나뿐인 작품" }
+      { id: '5-1', type: 'Apron', name: "하와이안 노소잉 에이프런", difficulty: 0, price: "19,900", img: "/images/IMG_0578.jpg", desc: "바느질 대신 의류용 접착테이프로 시접을 정리하고 아일렛으로 완성한 앞치마" },
+      { id: '5-2', type: 'Pouch', name: "매일 건강식 도시락 보자기 파우치", difficulty: 0, price: "12,900", img: "/images/IMG_0579.jpg", desc: "셔츠 등판을 활용해 매듭으로 완성하는 실용 보자기 파우치" },
+      { id: '5-3', type: 'Cushion', name: "트로피컬 포인트 쿠션", difficulty: 0, price: "18,900", img: "/images/IMG_0580.jpg", desc: "셔츠 단추 라인을 디자인 포인트로 살린 힙한 쿠션" }
     ]
   },
   {
     id: 3,
     type: '하의',
-    title: "가장 빛나던 시절의 스키니진",
-    desc: "옷장 깊숙이 있던, 이제는 작아진 청바지. 튼튼한 데님 소재의 특성을 살려 빈티지하고 힙한 오브제로 변신했습니다.",
+    isNoSew: true,
+    title: "빈티지 청바지의 힙한 변신",
+    desc: "무릎 늘어난 빈티지 데님. 아일렛과 리벳을 만나면 바느질 1도 없이 가장 트렌디한 오브제가 됩니다.",
     originalImage: "/images/IMG_0573.jpg",
     items: [
-      { id: '3-1', type: 'Cushion', name: "데님 포켓 쿠션", difficulty: 1, price: "19,900", img: "/images/IMG_0586.jpg", desc: "뒷주머니를 수납공간으로 활용한 센스" },
-      { id: '3-2', type: 'Bag', name: "빈티지 데님 숄더백", difficulty: 2, price: "25,900", img: "/images/IMG_0588.jpg", desc: "청바지 통을 그대로 살린 튼튼한 가방" },
-      { id: '3-3', type: 'Poster', name: "데님 소울 태피스트리", difficulty: 3, price: "14,900", img: "/images/IMG_0589.jpg", desc: "청바지의 워싱과 질감을 살린 벽걸이" }
+      { id: '3-1', type: 'Cushion', name: "아일렛 리벳 데님 쿠션", difficulty: 0, price: "19,900", img: "/images/IMG_0586.jpg", desc: "금속 아일렛과 리벳으로 고정하여 와일드한 멋을 살린 쿠션" },
+      { id: '3-2', type: 'Bag', name: "샤넬풍 데님 트위드백", difficulty: 1, price: "25,900", img: "/images/IMG_0588.jpg", desc: "데님의 워싱감을 살려 체인과 함께 엮어낸 하이엔드 무드 가방" },
+      { id: '3-3', type: 'Poster', name: "데님 소울 태피스트리", difficulty: 3, price: "14,900", img: "/images/IMG_0589.jpg", desc: "청바지의 워싱과 질감을 살린 감각적인 벽걸이" }
+    ]
+  },
+  {
+    id: 2,
+    type: '원피스',
+    isNoSew: true,
+    title: "원피스에 담긴 계절의 추억",
+    desc: "아끼던 원피스의 화려한 패턴. 바느질 없이도 정성을 담아 솜 공을 만들고 엮어내면 포근한 리스가 완성됩니다.",
+    originalImage: "/images/IMG_0582.jpg",
+    items: [
+      { id: '2-1', type: 'Wreath', name: "추억 담은 솜 공 리스", difficulty: 0, price: "24,900", img: "/images/IMG_0581.jpg", desc: "원단을 잘라 솜을 넣고 철사로 엮어 완성하는 정성 어린 리스" },
+      { id: '2-2', type: 'Bag', name: "원피스 레이어드 에코백", difficulty: 2, price: "22,900", img: "/images/IMG_0583.jpg", desc: "치맛단을 활용한 넉넉한 수납력의 감성 에코백" },
+      { id: '2-3', type: 'Cushion', name: "컬러블록 포인트 쿠션", difficulty: 1, price: "18,900", img: "/images/IMG_0584.jpg", desc: "원피스의 배색을 활용한 모던 디자인" }
     ]
   },
   {
     id: 4,
     type: '아기옷',
     title: "세상에 처음 나온 날, 배냇저고리",
-    desc: "너무 작아져 버린 우리 아이 첫 옷. 부드러운 오가닉 코튼 소재로 아이의 첫 친구가 되어줄 인형과 소품을 만들었어요.",
+    desc: "너무 작아져 버린 우리 아이 첫 옷. 액자 속에 고이 담아 우리 아이의 성장을 매일 축하해 주세요.",
     originalImage: "/images/IMG_0574.jpg",
     items: [
-      { id: '4-1', type: 'Cushion', name: "소프트 애착 쿠션", difficulty: 1, price: "17,900", img: "/images/IMG_0577.jpg", desc: "배냇저고리 여밈을 살린 포근한 쿠션" },
+      { id: '4-1', type: 'Frame', name: "첫 만남 기록 액자", difficulty: 1, price: "21,900", img: "/images/IMG_0585.jpg", desc: "탄생 정보와 함께 보관하는 우리 아이 추억 프레임" },
       { id: '4-2', type: 'Doll', name: "업사이클링 토끼인형", difficulty: 2, price: "29,900", img: "/images/IMG_0576.jpg", desc: "아이 옷으로 만들어 더 의미 있는 친구" },
-      { id: '4-3', type: 'Frame', name: "첫 만남 기록 액자", difficulty: 3, price: "21,900", img: "/images/IMG_0585.jpg", desc: "탄생 정보와 함께 보관하는 추억 프레임" }
-    ]
-  },
-  {
-    id: 5,
-    type: '상의',
-    title: "유행 지난 체크 셔츠, 빈티지 소품이 되다",
-    desc: "유행이 지나 손이 잘 가지 않던 체크 남방. 익숙한 패턴이 주는 편안함을 살려 집안 곳곳에 따뜻한 빈티지 무드를 더했습니다.",
-    originalImage: "/images/IMG_0572.jpg", 
-    items: [
-      { id: '5-1', type: 'Cushion', name: "버튼 포인트 체크 쿠션", difficulty: 1, price: "18,900", img: "/images/IMG_0580.jpg", desc: "셔츠 앞섬의 단추 디테일을 그대로 살린 디자인" },
-      { id: '5-2', type: 'Bag', name: "스퀘어 체크 토트백", difficulty: 2, price: "23,900", img: "/images/IMG_0579.jpg", desc: "가슴 포켓을 살려 실용성을 더한 가벼운 가방" },
-      { id: '5-3', type: 'Poster', name: "타이포그래피 아트 포스터", difficulty: 3, price: "16,900", img: "/images/IMG_0578.jpg", desc: "레터링 프린팅으로 힙하게 변신한 월 데코" }
+      { id: '4-3', type: 'Cushion', name: "소프트 애착 쿠션", difficulty: 1, price: "17,900", img: "/images/IMG_0577.jpg", desc: "배냇저고리 여밈을 살린 포근한 소품" }
     ]
   }
 ];
@@ -102,7 +106,7 @@ const Navbar = ({ activePage, setActivePage }) => {
         <div className="flex justify-between items-center h-16 md:h-20">
           <div className="flex-shrink-0 flex items-center gap-2 cursor-pointer" onClick={() => setActivePage('home')}>
             <Scissors className="h-6 w-6 text-[#E07A5F]" />
-            <span className="text-lg md:text-xl font-bold tracking-tight text-[#2D3142]">JJAJJA</span>
+            <span className="text-xl md:text-2xl font-black tracking-tight text-[#2D3142]">JJAJJA</span>
           </div>
           
           <div className="hidden md:flex space-x-8">
@@ -166,7 +170,7 @@ const Footer = () => (
           </div>
           <p className="text-sm font-normal leading-relaxed max-w-sm text-[#D1D5DB]">
             옷장 속 잠든 옷에 새로운 생명을 불어넣습니다.<br/>
-            추억을 간직하는 가장 따뜻하고 지속 가능한 방법, JJAJJA와 함께하세요.
+            추억을 간직하는 가장 따뜻하고 트렌디한 방법, JJAJJA와 함께하세요.
           </p>
         </div>
         <div>
@@ -198,120 +202,60 @@ const Footer = () => (
   </footer>
 );
 
-// --- StoryCard Component (Mobile Optimized: After Focus) ---
+// --- StoryCard Component (Original Style) ---
 
 const StoryCard = ({ story, setActivePage }) => {
-  // Default to 0 (First Item/After) instead of -1 (Before)
   const [selectedIndex, setSelectedIndex] = useState(0); 
-
   const currentItem = selectedIndex === -1 ? null : story.items[selectedIndex];
   const displayImage = selectedIndex === -1 ? story.originalImage : currentItem.img;
 
   return (
-    <div className="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-[#E5E0D8] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col md:flex-row h-auto">
-      
-      {/* Top: Main Display Area */}
-      <div className="w-full md:w-[55%] bg-[#F5F0E8] relative overflow-hidden group aspect-[4/3] md:aspect-auto md:min-h-[450px]">
-         <img 
-            src={displayImage} 
-            alt="Main Display" 
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            onError={(e) => { e.target.src = 'https://via.placeholder.com/600x600?text=No+Image'; }}
-         />
-         
-         {/* Top Overlay Badge */}
-         <div className="absolute top-4 left-4 flex gap-2">
-            <div className={`backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold shadow-sm flex items-center gap-1.5 ${selectedIndex === -1 ? 'bg-[#2D3142]/90 text-white' : 'bg-white/90 text-[#E07A5F]'}`}>
-                {selectedIndex === -1 ? 'Before' : 'After'}
+    <div className="bg-white rounded-[2.5rem] overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col md:flex-row mb-10 group">
+      <div className="w-full md:w-[50%] bg-[#F5F0E8] relative aspect-square md:aspect-auto">
+         <img src={displayImage} alt="Display" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" onError={(e) => {e.target.src = 'https://via.placeholder.com/600x600?text=이미지 준비 중'}} />
+         <div className="absolute top-6 left-6 flex flex-col gap-2">
+            {story.isNoSew && (
+                <div className="bg-orange-500 text-white px-4 py-2 rounded-full text-[10px] font-black shadow-lg flex items-center gap-1">
+                    <Zap className="w-3 h-3 fill-white" /> 바느질 0%
+                </div>
+            )}
+            <div className={`backdrop-blur-md px-4 py-2 rounded-full text-[10px] font-black tracking-widest ${selectedIndex === -1 ? 'bg-black/80 text-white' : 'bg-white/90 text-slate-800'}`}>
+                {selectedIndex === -1 ? 'BEFORE' : 'AFTER'}
             </div>
          </div>
       </div>
-
-      {/* Bottom: Info & Controls */}
-      <div className="w-full md:w-[45%] p-5 md:p-8 flex flex-col bg-white">
-         
-         {/* 1. Header Info */}
-         <div className="mb-4 md:mb-6">
-            <h3 className="text-xl md:text-2xl font-bold text-[#2D3142] mb-2 leading-tight">
+      <div className="w-full md:w-[50%] p-10 md:p-14 flex flex-col">
+         <div className="mb-8">
+            <h3 className="text-2xl md:text-3xl font-black text-[#2D3142] mb-4 leading-tight">
                 {selectedIndex === -1 ? story.title : currentItem.name}
             </h3>
-            <p className="text-[#5D5F65] text-sm leading-relaxed line-clamp-2 md:line-clamp-none">
+            <p className="text-slate-500 text-sm md:text-base leading-relaxed mb-6 font-medium">
                 {selectedIndex === -1 ? story.desc : currentItem.desc}
             </p>
          </div>
-
-         {/* 2. Thumbnails (Now 4 items including Before) */}
-         <div className="mb-6 mt-auto">
-            <p className="text-[10px] md:text-xs text-[#9CA3AF] font-bold mb-2 uppercase tracking-wider">
-                변신 과정 보기
-            </p>
-            <div className="flex gap-2 md:gap-3">
-                {/* Original (Before) Thumbnail - First Position */}
-                <button 
-                    onClick={() => setSelectedIndex(-1)}
-                    className={`relative w-14 h-14 md:w-16 md:h-16 rounded-lg overflow-hidden border transition-all ${selectedIndex === -1 ? 'border-[#2D3142] ring-2 ring-[#2D3142]/10' : 'border-slate-100 opacity-70 hover:opacity-100'}`}
-                >
-                    <img src={story.originalImage} className="w-full h-full object-cover" onError={(e) => e.target.src = 'https://via.placeholder.com/100x100?text=Before'} />
-                    <span className="absolute bottom-0 left-0 right-0 bg-black/60 text-[8px] text-white text-center py-0.5">Before</span>
+         <div className="mt-auto">
+            <p className="text-[10px] text-slate-400 font-black mb-4 uppercase tracking-[0.2em]">Select Item</p>
+            <div className="flex gap-3 mb-10">
+                <button onClick={() => setSelectedIndex(-1)} className={`w-16 h-16 rounded-2xl border-2 overflow-hidden transition-all ${selectedIndex === -1 ? 'border-black' : 'border-transparent opacity-40 hover:opacity-100'}`}>
+                    <img src={story.originalImage} className="w-full h-full object-cover" />
                 </button>
-
-                {/* After Item Thumbnails */}
                 {story.items.map((item, idx) => (
-                    <button 
-                        key={item.id}
-                        onClick={() => setSelectedIndex(idx)}
-                        className={`relative w-14 h-14 md:w-16 md:h-16 rounded-lg overflow-hidden border transition-all ${selectedIndex === idx ? 'border-[#E07A5F] ring-2 ring-[#E07A5F]/20' : 'border-slate-100 opacity-70 hover:opacity-100'}`}
-                    >
-                        <img src={item.img} className="w-full h-full object-cover" onError={(e) => e.target.src = 'https://via.placeholder.com/100x100'} />
+                    <button key={item.id} onClick={() => setSelectedIndex(idx)} className={`w-16 h-16 rounded-2xl border-2 overflow-hidden transition-all ${selectedIndex === idx ? 'border-orange-500 shadow-lg' : 'border-transparent opacity-40 hover:opacity-100'}`}>
+                        <img src={item.img} className="w-full h-full object-cover" />
                     </button>
                 ))}
             </div>
+            <div className="flex gap-3">
+                <button onClick={() => setActivePage('market')} className="flex-1 bg-slate-900 text-white py-4 rounded-2xl font-black text-sm hover:bg-black transition-colors">키트 구매</button>
+                <button onClick={() => setActivePage('studio')} className="flex-1 bg-white border border-slate-200 text-slate-900 py-4 rounded-2xl font-black text-sm hover:bg-slate-50 transition-colors">AI 가이드</button>
+            </div>
          </div>
-
-         {/* 3. Action Buttons */}
-         <div className="pt-4 border-t border-[#F5F0E8]">
-             {selectedIndex !== -1 ? (
-                 <div className="animate-fade-in-up space-y-3">
-                     <div className="flex justify-between items-center text-sm">
-                        <span className="text-[#2D3142] font-bold text-lg">{currentItem.price}원</span>
-                        <div className="flex items-center gap-1 text-[#5D5F65] text-xs bg-[#F5F0E8] px-2 py-1 rounded">
-                            <span className="font-bold">난이도</span>
-                            {[...Array(3)].map((_, i) => (
-                                <Star key={i} className={`w-3 h-3 ${i < currentItem.difficulty ? 'text-[#E07A5F] fill-[#E07A5F]' : 'text-[#D1D5DB]'}`} />
-                            ))}
-                        </div>
-                     </div>
-                     <div className="flex gap-2">
-                        <button 
-                            onClick={() => setActivePage('market')}
-                            className="flex-1 bg-white text-[#2D3142] border border-[#E5E0D8] hover:border-[#2D3142] py-3 rounded-xl font-bold text-sm transition flex items-center justify-center gap-2"
-                        >
-                            <ShoppingBag className="w-4 h-4" />
-                            키트 구매
-                        </button>
-                        <button 
-                            onClick={() => setActivePage('studio')}
-                            className="flex-1 bg-[#6B8E73] hover:bg-[#55725C] text-white py-3 rounded-xl font-bold text-sm transition flex items-center justify-center gap-2 shadow-sm"
-                        >
-                            <Sparkles className="w-4 h-4" />
-                            제작 의뢰하기
-                        </button>
-                     </div>
-                 </div>
-             ) : (
-                 <div className="flex items-center justify-center h-12 text-xs text-[#9CA3AF] bg-[#F9FAFB] rounded-xl">
-                    <Info className="w-3 h-3 mr-1" />
-                    결과물을 선택하면 제작 정보를 볼 수 있습니다
-                 </div>
-             )}
-         </div>
-
       </div>
     </div>
   );
 };
 
-// --- Page Components ---
+// --- Main Pages ---
 
 const HomePage = ({ setActivePage }) => {
   const [activeStoryIndex, setActiveStoryIndex] = useState(0);
@@ -325,91 +269,96 @@ const HomePage = ({ setActivePage }) => {
 
   return (
     <div className="animate-fade-in">
-      <section className="relative pt-24 pb-16 lg:pt-32 lg:pb-24 overflow-hidden px-4 bg-[#FFF9F0]">
+      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden px-4 bg-[#FFF9F0]">
         <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#6B8E73]/10 rounded-full blur-3xl" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#E07A5F]/10 rounded-full blur-3xl" />
 
-        <div className="max-w-7xl mx-auto relative z-10 text-center mb-12">
-          <span className="inline-block py-1 px-3 rounded-full bg-[#E07A5F]/10 text-[#E07A5F] border border-[#E07A5F]/20 text-xs font-semibold tracking-wide mb-4">
+        <div className="max-w-7xl mx-auto relative z-10 text-center mb-16">
+          <span className="inline-block py-1.5 px-4 rounded-full bg-[#E07A5F]/10 text-[#E07A5F] border border-[#E07A5F]/20 text-xs font-semibold tracking-wide mb-6">
              🌱 추억을 새로운 일상으로
           </span>
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#2D3142] leading-tight mb-4">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-[#2D3142] leading-tight mb-6">
             옷장 속 추억,<br/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E07A5F] to-[#6B8E73]">
               새로운 오브제로
             </span>
           </h1>
-          <p className="text-base md:text-lg text-[#5D5F65] mb-8 max-w-xl mx-auto leading-relaxed font-normal">
+          <p className="text-lg md:text-xl text-[#5D5F65] mb-10 max-w-2xl mx-auto leading-relaxed font-normal">
             사진 한 장이면 충분합니다. AI가 디자인을 제안하고, 나만의 제작 키트를 보내드려요.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center mb-10">
-            <button onClick={() => setActivePage('studio')} className="flex items-center justify-center bg-[#6B8E73] text-white px-6 py-3.5 rounded-full font-semibold text-base hover:bg-[#55725C] transition shadow-lg hover:shadow-[#6B8E73]/20 transform hover:-translate-y-1">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <button onClick={() => setActivePage('studio')} className="flex items-center justify-center bg-[#6B8E73] text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-[#55725C] transition shadow-xl hover:shadow-[#6B8E73]/20 transform hover:-translate-y-1">
               <Camera className="w-5 h-5 mr-2" />
               내 옷 변신시키기
             </button>
-            <button onClick={() => setActivePage('gallery')} className="flex items-center justify-center bg-white text-[#2D3142] border border-[#2D3142] px-6 py-3.5 rounded-full font-semibold text-base hover:bg-[#2D3142] hover:text-white transition">
-              변신 사례 보기
+            <button onClick={() => setActivePage('gallery')} className="flex items-center justify-center bg-white text-[#2D3142] border border-[#2D3142] px-8 py-4 rounded-full font-semibold text-lg hover:bg-[#2D3142] hover:text-white transition">
+              바느질 없이 시작
             </button>
           </div>
 
-          <div className="md:hidden grid grid-cols-4 gap-2 max-w-sm mx-auto mb-6 px-2">
-            <button onClick={() => setActivePage('gallery')} className="flex flex-col items-center gap-1.5 group">
-              <div className="w-12 h-12 bg-white rounded-2xl shadow-sm border border-[#E5E0D8] flex items-center justify-center group-hover:border-[#E07A5F] transition-all">
-                <ImageIcon className="w-5 h-5 text-[#E07A5F]" />
+          <div className="md:hidden grid grid-cols-4 gap-3 max-w-sm mx-auto mb-8 px-2">
+            <button onClick={() => setActivePage('gallery')} className="flex flex-col items-center gap-2 group">
+              <div className="w-14 h-14 bg-white rounded-2xl shadow-sm border border-[#E5E0D8] flex items-center justify-center group-hover:border-[#E07A5F] group-hover:shadow-md transition-all">
+                <ImageIcon className="w-6 h-6 text-[#E07A5F]" />
               </div>
-              <span className="text-[10px] font-semibold text-[#5D5F65]">변신 사례</span>
+              <span className="text-xs font-semibold text-[#5D5F65]">변신 사례</span>
             </button>
-            <button onClick={() => setActivePage('studio')} className="flex flex-col items-center gap-1.5 group">
-              <div className="w-12 h-12 bg-white rounded-2xl shadow-sm border border-[#E5E0D8] flex items-center justify-center group-hover:border-[#E07A5F] transition-all">
-                <Sparkles className="w-5 h-5 text-[#6B8E73]" />
+            <button onClick={() => setActivePage('studio')} className="flex flex-col items-center gap-2 group">
+              <div className="w-14 h-14 bg-white rounded-2xl shadow-sm border border-[#E5E0D8] flex items-center justify-center group-hover:border-[#E07A5F] group-hover:shadow-md transition-all">
+                <Sparkles className="w-6 h-6 text-[#6B8E73]" />
               </div>
-              <span className="text-[10px] font-semibold text-[#5D5F65]">무료 체험</span>
+              <span className="text-xs font-semibold text-[#5D5F65]">무료 체험</span>
             </button>
-            <button onClick={() => setActivePage('market')} className="flex flex-col items-center gap-1.5 group">
-              <div className="w-12 h-12 bg-white rounded-2xl shadow-sm border border-[#E5E0D8] flex items-center justify-center group-hover:border-[#E07A5F] transition-all">
-                <ShoppingBag className="w-5 h-5 text-[#E07A5F]" />
+            <button onClick={() => setActivePage('market')} className="flex flex-col items-center gap-2 group">
+              <div className="w-14 h-14 bg-white rounded-2xl shadow-sm border border-[#E5E0D8] flex items-center justify-center group-hover:border-[#E07A5F] group-hover:shadow-md transition-all">
+                <ShoppingBag className="w-6 h-6 text-[#E07A5F]" />
               </div>
-              <span className="text-[10px] font-semibold text-[#5D5F65]">키트 구매</span>
+              <span className="text-xs font-semibold text-[#5D5F65]">키트 구매</span>
             </button>
-            <button onClick={() => setActivePage('about')} className="flex flex-col items-center gap-1.5 group">
-              <div className="w-12 h-12 bg-white rounded-2xl shadow-sm border border-[#E5E0D8] flex items-center justify-center group-hover:border-[#E07A5F] transition-all">
-                <Book className="w-5 h-5 text-[#6B8E73]" />
+            <button onClick={() => setActivePage('about')} className="flex flex-col items-center gap-2 group">
+              <div className="w-14 h-14 bg-white rounded-2xl shadow-sm border border-[#E5E0D8] flex items-center justify-center group-hover:border-[#E07A5F] group-hover:shadow-md transition-all">
+                <Book className="w-6 h-6 text-[#6B8E73]" />
               </div>
-              <span className="text-[10px] font-semibold text-[#5D5F65]">완성 작품</span>
+              <span className="text-xs font-semibold text-[#5D5F65]">완성 작품</span>
             </button>
           </div>
         </div>
 
         {/* Hero Slider/Card */}
-        <div className="max-w-5xl mx-auto relative z-10 px-2">
+        <div className="max-w-6xl mx-auto relative z-10 px-2">
             <div className="bg-white rounded-3xl border border-[#E5E0D8] overflow-hidden shadow-xl">
                 <div className="grid md:grid-cols-2">
-                    <div className="relative h-64 md:h-80">
+                    <div className="relative h-64 md:h-96">
                         <img src={STORIES[activeStoryIndex].originalImage} className="w-full h-full object-cover" alt="Before" onError={(e) => e.target.src = 'https://via.placeholder.com/800x800?text=No+Image'} />
                         <div className="absolute top-4 left-4 bg-black/60 text-white text-xs px-3 py-1 rounded-full font-bold">BEFORE</div>
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
                             <div>
-                                <h3 className="text-white text-xl font-bold mb-1">{STORIES[activeStoryIndex].title}</h3>
-                                <p className="text-[#E5E0D8] text-xs font-normal line-clamp-1">{STORIES[activeStoryIndex].desc}</p>
+                                <h3 className="text-white text-2xl font-bold mb-2">{STORIES[activeStoryIndex].title}</h3>
+                                <p className="text-[#E5E0D8] text-sm font-normal line-clamp-2">{STORIES[activeStoryIndex].desc}</p>
                             </div>
                         </div>
                     </div>
-                    <div className="bg-white p-6 flex flex-col justify-center">
-                        <div className="flex items-center justify-between mb-4">
-                            <span className="text-[#E07A5F] font-bold text-xs tracking-widest uppercase">After Re:Life</span>
-                            <div className="flex gap-1.5">
+                    <div className="bg-white p-6 md:p-10 flex flex-col justify-center">
+                        <div className="flex items-center justify-between mb-6">
+                            <span className="text-[#E07A5F] font-bold text-sm tracking-widest uppercase">After Re:Life</span>
+                            <div className="flex gap-2">
                                 {STORIES.map((_, i) => (
-                                    <div key={i} className={`w-1.5 h-1.5 rounded-full transition-all ${i === activeStoryIndex ? 'bg-[#E07A5F] w-4' : 'bg-[#E5E0D8]'}`} />
+                                    <div key={i} className={`w-2 h-2 rounded-full transition-all ${i === activeStoryIndex ? 'bg-[#E07A5F] w-6' : 'bg-[#E5E0D8]'}`} />
                                 ))}
                             </div>
                         </div>
-                        <div className="grid grid-cols-3 gap-3">
+                        <div className="grid grid-cols-3 gap-4">
                             {STORIES[activeStoryIndex].items.map((item, idx) => (
                                 <div key={idx} className="group cursor-pointer">
-                                    <div className="aspect-square rounded-xl overflow-hidden mb-2 bg-[#F5F0E8] relative border border-[#E5E0D8]">
+                                    <div className="aspect-square rounded-xl overflow-hidden mb-3 bg-[#F5F0E8] relative border border-[#E5E0D8]">
                                         <img src={item.img} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onError={(e) => e.target.src = 'https://via.placeholder.com/400x400?text=No+Image'} />
                                     </div>
-                                    <p className="text-xs font-bold text-[#2D3142] truncate">{item.name}</p>
+                                    <p className="text-sm font-bold text-[#2D3142] truncate">{item.name}</p>
+                                    <div className="flex gap-0.5 mt-1">
+                                        {[...Array(3)].map((_, i) => (
+                                            <Star key={i} className={`w-3 h-3 ${i < item.difficulty ? 'text-[#E07A5F] fill-[#E07A5F]' : 'text-[#E5E0D8]'}`} />
+                                        ))}
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -430,23 +379,23 @@ const GalleryPage = ({ setActivePage }) => {
     : STORIES.filter(story => story.type === filter);
 
   return (
-    <div className="pt-20 pb-20 px-4 min-h-screen bg-[#FFF9F0] animate-fade-in">
+    <div className="pt-24 pb-20 px-4 min-h-screen bg-[#FFF9F0] animate-fade-in">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-8 md:mb-12">
-          <h1 className="text-2xl md:text-3xl font-bold text-[#2D3142] tracking-tight mb-2">TRANSFORMATION GALLERY</h1>
-          <p className="text-[#5D5F65] text-sm md:text-base font-normal">의류별, 스타일별로 변신 사례를 둘러보세요.</p>
+        <div className="text-center mb-16">
+          <h1 className="text-3xl md:text-5xl font-bold text-[#E07A5F] tracking-widest uppercase mb-4">TRANSFORMATION GALLERY</h1>
+          <p className="text-[#5D5F65] max-w-2xl mx-auto font-normal text-lg">의류별, 스타일별로 변신 사례를 둘러보세요.</p>
         </div>
 
         {/* Filters */}
-        <div className="flex justify-center gap-1.5 md:gap-2 mb-10 flex-wrap px-2">
+        <div className="flex justify-center gap-2 mb-16 flex-wrap">
           {CATEGORIES.map(f => (
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold transition-all ${
+              className={`px-6 py-2 rounded-full text-sm font-semibold transition-all ${
                 filter === f 
-                  ? 'bg-[#2D3142] text-white shadow-md' 
-                  : 'bg-white text-[#5D5F65] border border-[#E5E0D8]'
+                  ? 'bg-[#2D3142] text-white shadow-lg scale-105' 
+                  : 'bg-white text-[#5D5F65] border border-[#E5E0D8] hover:border-[#2D3142] hover:text-[#2D3142]'
               }`}
             >
               {f}
@@ -455,7 +404,7 @@ const GalleryPage = ({ setActivePage }) => {
         </div>
 
         {/* Story Grid (Using New Interactive StoryCard) */}
-        <div className="space-y-8 md:space-y-12">
+        <div className="space-y-12">
           {filteredStories.map(story => (
             <div key={story.id} className="animate-fade-in-up">
                <StoryCard story={story} setActivePage={setActivePage} />
@@ -730,6 +679,4 @@ const App = () => {
   );
 };
 
-
 export default App;
-
