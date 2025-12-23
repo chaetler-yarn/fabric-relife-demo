@@ -5,9 +5,9 @@ import {
 } from 'lucide-react';
 
 /**
- * JJAJJA (짜짜) - Mobile Icons Restored Version
- * 1. 홈 화면 모바일 퀵 메뉴(4개 아이콘) 복구 완료
- * 2. 기존 컨텐츠 및 디자인 유지
+ * JJAJJA (짜짜) - Final Revised Version
+ * 1. 겉옷 스토리 첫 화면: '메모리 드로잉 포스터'로 변경 (데이터 순서 조정)
+ * 2. '바느질 0%' 오렌지색 뱃지 삭제 완료
  */
 
 // --- 데이터 구조 ---
@@ -22,9 +22,10 @@ const STORIES = [
     desc: "30년 간 가족을 위해 입으셨던 아버지의 회색 양복. 차가운 옷장 대신 따뜻한 거실에서 매일 아버지를 기억합니다.",
     originalImage: "/images/IMG_0590.jpg",
     items: [
+      // 요청사항 반영: 포스터를 0번 인덱스(첫번째)로 이동시켰습니다.
+      { id: '1-3', type: 'Poster', name: "메모리 드로잉 포스터", difficulty: 3, price: "14,900", img: "/images/IMG_0595.jpg", desc: "아버지의 뒷모습을 담은 패브릭 아트" },
       { id: '1-1', type: 'Cushion', name: "클래식 수트 쿠션", difficulty: 1, price: "18,900", img: "/images/IMG_0597.jpg", desc: "앞주머니 디테일을 살린 중후한 멋" },
-      { id: '1-2', type: 'Bag', name: "데일리 수트 토트백", difficulty: 2, price: "24,900", img: "/images/IMG_0596.jpg", desc: "라펠 디자인을 그대로 살린 가방" },
-      { id: '1-3', type: 'Poster', name: "메모리 드로잉 포스터", difficulty: 3, price: "14,900", img: "/images/IMG_0595.jpg", desc: "아버지의 뒷모습을 담은 패브릭 아트" }
+      { id: '1-2', type: 'Bag', name: "데일리 수트 토트백", difficulty: 2, price: "24,900", img: "/images/IMG_0596.jpg", desc: "라펠 디자인을 그대로 살린 가방" }
     ]
   },
   {
@@ -108,7 +109,7 @@ const Navbar = ({ activePage, setActivePage }) => {
             <Scissors className="h-6 w-6 text-[#E07A5F]" />
             <span className="text-xl md:text-2xl font-black tracking-tight text-[#2D3142]">JJAJJA</span>
           </div>
-          
+           
           <div className="hidden md:flex space-x-8">
             {navLinks.map((link) => (
               <button
@@ -139,7 +140,7 @@ const Navbar = ({ activePage, setActivePage }) => {
           </div>
         </div>
       </div>
-      
+       
       {isMenuOpen && (
         <div className="md:hidden bg-[#FFF9F0] border-b border-[#E5E0D8] absolute w-full top-16 left-0 shadow-xl z-50">
           <div className="px-4 pt-2 pb-6 space-y-1">
@@ -202,7 +203,7 @@ const Footer = () => (
   </footer>
 );
 
-// --- StoryCard Component (Original Style) ---
+// --- StoryCard Component (Modified) ---
 
 const StoryCard = ({ story, setActivePage }) => {
   const [selectedIndex, setSelectedIndex] = useState(0); 
@@ -214,11 +215,7 @@ const StoryCard = ({ story, setActivePage }) => {
       <div className="w-full md:w-[50%] bg-[#F5F0E8] relative aspect-square md:aspect-auto">
          <img src={displayImage} alt="Display" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" onError={(e) => {e.target.src = 'https://via.placeholder.com/600x600?text=이미지 준비 중'}} />
          <div className="absolute top-6 left-6 flex flex-col gap-2">
-            {story.isNoSew && (
-                <div className="bg-orange-500 text-white px-4 py-2 rounded-full text-[10px] font-black shadow-lg flex items-center gap-1">
-                    <Zap className="w-3 h-3 fill-white" /> 바느질 0%
-                </div>
-            )}
+            {/* 요청사항 반영: 바느질 0% 뱃지 삭제됨 */}
             <div className={`backdrop-blur-md px-4 py-2 rounded-full text-[10px] font-black tracking-widest ${selectedIndex === -1 ? 'bg-black/80 text-white' : 'bg-white/90 text-slate-800'}`}>
                 {selectedIndex === -1 ? 'BEFORE' : 'AFTER'}
             </div>
@@ -275,7 +272,7 @@ const HomePage = ({ setActivePage }) => {
 
         <div className="max-w-7xl mx-auto relative z-10 text-center mb-16">
           <span className="inline-block py-1.5 px-4 rounded-full bg-[#E07A5F]/10 text-[#E07A5F] border border-[#E07A5F]/20 text-xs font-semibold tracking-wide mb-6">
-             🌱 추억을 새로운 일상으로
+              🌱 추억을 새로운 일상으로
           </span>
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-[#2D3142] leading-tight mb-6">
             옷장 속 추억,<br/>
@@ -373,7 +370,7 @@ const HomePage = ({ setActivePage }) => {
 
 const GalleryPage = ({ setActivePage }) => {
   const [filter, setFilter] = useState('전체');
-  
+   
   const filteredStories = filter === '전체' 
     ? STORIES 
     : STORIES.filter(story => story.type === filter);
@@ -457,7 +454,7 @@ const StudioPage = () => {
                         <div className="w-full max-w-lg animate-fade-in">
                             <h2 className="text-3xl font-bold text-[#2D3142] mb-4">Design Your Memory</h2>
                             <p className="text-[#5D5F65] mb-10 font-normal">옷을 바닥에 펼치고 사진을 업로드하세요.<br/>A4 용지를 옆에 두면 크기 측정이 더 정확해집니다.</p>
-                            
+                             
                             <div className="border-3 border-dashed border-[#E5E0D8] rounded-2xl p-12 hover:border-[#E07A5F] hover:bg-[#FFF9F0] transition-all cursor-pointer group" onClick={handleUpload}>
                                 <div className="w-20 h-20 bg-[#F5F0E8] rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                                     <Upload className="w-8 h-8 text-[#9CA3AF] group-hover:text-[#E07A5F]" />
@@ -652,7 +649,7 @@ const App = () => {
     link.href = "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css";
     link.rel = "stylesheet";
     document.head.appendChild(link);
-    
+     
     return () => {
       document.head.removeChild(link);
     };
